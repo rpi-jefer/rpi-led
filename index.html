@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Boton</title>
+        <script src="js/jquery-1.9.1.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/estilo.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    </head>
+    <body><br>
+        <div class="container">
+			<header><br>
+				<h4>CONTROL REMOTO DE UN LED CON RASPBERRY PI</h4>
+				<hr>
+			</header>
+			<section>
+					<br><br>
+				     <input type="checkbox" id="switch" name="switch">
+  	    			 <label for="switch" class="switch"></label>
+    				 <div align="center" id="bombillo">
+     				</div><br>
+			</section>
+			<div align="center" id="imagen_bombillo">
+				
+			</div>
+        </div>
+    	<script>
+			$("#switch").change(function()
+			{
+				var checkeado=$("#switch").attr("checked");
+				if(checkeado) {
+					
+					$("#switch").removeAttr("checked");
+
+					console.lo("gestado 1");
+					var estado=1;
+					$("#bombillo").text("Estado Apagado");
+					$("#bombillo").removeClass('alert alert-info').addClass( "alert alert-danger" );
+					$("#imagen_bombillo").html('<img src="images/off.jpg">');
+					$.ajax({
+						data:{valor_estado: estado},
+						url:'procesa.php',
+						type:'POST',
+						success: function(response){
+							//alert("Salida: "+response );
+						}
+					});
+
+				} else {
+					$("#switch").attr("checked","checked");
+					console.log("estado 2");
+					var estado=2;
+					$("#bombillo").text("Estado Encendido");
+					$("#bombillo").removeClass('alert alert-danger').addClass( "alert alert-info" );
+					$("#imagen_bombillo").html('<img src="images/on.jpg">');
+					    $.ajax({
+						data:{valor_estado: estado},
+						url:'procesa.php',
+						type:'POST',
+						success: function(response){
+							//alert("Salida: "+response );
+     					}
+					});
+				}
+			});
+		</script>
+    </body>
+</html>
